@@ -1,8 +1,9 @@
-import { Slot, Stack } from 'expo-router';
+import { SplashScreen, Stack } from 'expo-router';
 import { Text } from 'react-native';
 import { useFonts } from 'expo-font';
 import { useEffect } from 'react';
-
+//Splash screens are usually shown when an app is launched and may automatically hide after a certain period of time.
+SplashScreen.preventAutoHideAsync() //prevent splash screen from hiding automatically, giving control when it should be hidden.
 
 export default function RootLayout() {
 
@@ -21,7 +22,10 @@ export default function RootLayout() {
   useEffect(() => {
     if(error) throw error;
 
-    // if(Fontsloaded) throw
+    if(Fontsloaded) SplashScreen.hideAsync();
+
+    if(!Fontsloaded && !error) return null;
+
   },[Fontsloaded,error])
 
   return (
