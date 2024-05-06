@@ -6,11 +6,13 @@ import { images } from '../../constants/index'
 import FormField from '../../components/formfield'
 import CustomButton from '../../components/custombutton'
 import { createUser } from '../../lib/appwrite'
+import { useGlovalContext } from '../../context/GlobalProvider'
 
 const SignUp = () => {
 
   const [form, setForm] = useState({ username: "", email: "", password: "" })
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { setUser, setIsLoggedIn } = useGlovalContext();
 
   const submit = async () => {
     if (form.email === "" || form.password === "" || form.username === "") {
@@ -18,7 +20,10 @@ const SignUp = () => {
     }
     setIsSubmitting(true);
     try {
-      const result = await createUser(form.username, form.email, form.password)
+      const result = await createUser(form.username, form.email, form.password);
+      setUser(result);
+      setIsLoggedIn(true);
+      Alert.alert("Success", "Account Created")
       router.replace('/home');
     } catch (error) {
       Alert.alert("Error", error.message)

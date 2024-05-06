@@ -6,10 +6,12 @@ import { images } from '../../constants/index'
 import FormField from '../../components/formfield'
 import CustomButton from '../../components/custombutton'
 import { signin } from '../../lib/appwrite'
+import { useGlovalContext } from '../../context/GlobalProvider'
 
 const SignIn = () => {
   const [form, setForm] = useState({ email: "", password: "" })
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { setUser, setIsLoggedIn } = useGlovalContext();
 
   const submit = async () => {
     if (form.email === "" || form.password === "") {
@@ -17,7 +19,11 @@ const SignIn = () => {
     }
     setIsSubmitting(true);
     try {
-      await signin(form.email, form.password)
+      const result = await signin(form.email, form.password);
+      setUser(result);
+      setIsLoggedIn(true);
+      Alert.alert("Success", "User Signed in Sucessfully")
+
       router.replace('/home');
     } catch (error) {
       Alert.alert("Error", error.message)

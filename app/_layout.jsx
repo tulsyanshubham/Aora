@@ -1,14 +1,14 @@
 import { SplashScreen, Stack } from 'expo-router';
-import { Text } from 'react-native';
 import { useFonts } from 'expo-font';
 import { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar'
-import { SafeAreaView } from 'react-native-safe-area-context';
+
+import GlobalProvider from '../context/GlobalProvider';
 
 //Splash screens are usually shown when an app is launched and may automatically hide after a certain period of time.
 SplashScreen.preventAutoHideAsync() //prevent splash screen from hiding automatically, giving control when it should be hidden.
 
-export default function RootLayout() {
+const RootLayout = () => {
 
   const [Fontsloaded, error] = useFonts({
     "poppins-black": require("../assets/fonts/Poppins-Black.ttf"),
@@ -25,14 +25,21 @@ export default function RootLayout() {
   useEffect(() => {
     if (error) throw error;
 
-    if (Fontsloaded) SplashScreen.hideAsync();
+    if (Fontsloaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [Fontsloaded, error]);
 
-    if (!Fontsloaded && !error) return null;
+  if (!Fontsloaded) {
+    return null;
+  }
 
-  }, [Fontsloaded, error])
+  if (!Fontsloaded && !error) {
+    return null;
+  }
 
   return (
-    <>
+    <GlobalProvider>
       <Stack>
         <Stack.Screen name='index' options={{ headerShown: false }} />
         <Stack.Screen name='(auth)' options={{ headerShown: false }} />
@@ -40,6 +47,8 @@ export default function RootLayout() {
         {/* <Stack.Screen name='/search/[query]' options={{ headerShown: false }} /> */}
       </Stack>
       <StatusBar backgroundColor='#161622' style='light' />
-    </>
+    </GlobalProvider>
   );
 }
+
+export default RootLayout;
