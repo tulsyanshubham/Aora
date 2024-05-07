@@ -2,12 +2,9 @@ import { View, Text, FlatList, Image, RefreshControl, Alert } from 'react-native
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { images } from '../../constants/index'
-import SearchInput from '../../components/searchinput'
-import Trending from '../../components/trending'
-import EmptyState from '../../components/emptystate'
 import { getAllPosts, getLatestPosts } from '../../lib/appwrite'
 import useAppWrite from '../../lib/useappwrite'
-import VideoCard from '../../components/videocard'
+import {EmptyState, SearchInput, Trending, VideoCard} from '../../components'
 
 const Home = () => {
 

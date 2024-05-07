@@ -3,15 +3,14 @@ import React, { useState } from 'react'
 import { Link, Redirect, router } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { images } from '../../constants/index'
-import FormField from '../../components/formfield'
-import CustomButton from '../../components/custombutton'
+import {FormField,CustomButton} from '../../components'
 import { signin } from '../../lib/appwrite'
-import { useGlovalContext } from '../../context/GlobalProvider'
+import { useGlobalContext } from '../../context/GlobalProvider'
 
 const SignIn = () => {
   const [form, setForm] = useState({ email: "", password: "" })
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { setUser, setIsLoggedIn } = useGlovalContext();
+  const { setUser, setIsLoggedIn } = useGlobalContext();
 
   const submit = async () => {
     if (form.email === "" || form.password === "") {
