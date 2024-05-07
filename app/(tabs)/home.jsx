@@ -11,16 +11,16 @@ import VideoCard from '../../components/videocard'
 
 const Home = () => {
 
-  const {data : posts, refetch} = useAppWrite(getAllPosts);
+  const { data: posts, refetch } = useAppWrite(getAllPosts);
   const { data: trendingPosts } = useAppWrite(getLatestPosts);
-  
+
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = async () => {
     setRefreshing(true)
     await refetch()
     setRefreshing(false)
   }
-  
+
   return (
     <SafeAreaView className="bg-primary h-full">
       <FlatList

@@ -2,6 +2,7 @@ import { act, useState } from 'react'
 import { View, Text, FlatList, TouchableOpacity, ImageBackground, Image } from 'react-native'
 import * as Animatable from 'react-native-animatable'
 import { icons } from '../constants'
+import { Video, ResizeMode } from 'expo-av'
 
 const zoomIn = {
   0: { scale: 0.9 },
@@ -23,7 +24,18 @@ const TrendingItem = ({ activeItem, item }) => {
       duration={500}
     >
       {play ? (
-        <Text className="Text-white">Playing</Text>
+        <Video
+          source={{ uri: item.video }}
+          className="w-52 h-72 rounded-[35px] mt-3 bg-white/10"
+          resizeMode={ResizeMode.CONTAIN}
+          useNativeControls
+          shouldPlay
+          onPlaybackStatusUpdate={(status) => {
+            if (status.didJustFinish) {
+              setPlay(false);
+            }
+          }}
+        />
       ) : (
         <TouchableOpacity
           className="relative justify-center items-center"
@@ -32,7 +44,7 @@ const TrendingItem = ({ activeItem, item }) => {
         >
           <ImageBackground
             source={{ uri: item.thumbnail }}
-            className="w-52 h-72 rounded-[35px] my-5 overflow-hidden shadow-lg shadow-black/40    border-2 border-red-500"
+            className="w-52 h-72 rounded-[35px] my-5 overflow-hidden shadow-lg shadow-black/40"
           />
           <Image
             source={icons.play}
@@ -49,8 +61,8 @@ const TrendingItem = ({ activeItem, item }) => {
 const Trending = ({ posts }) => {
   const [activeItem, setActiveItem] = useState(posts[0]);
 
-  const viewableItemChanged = ({viewableItems}) => {
-    if(viewableItems.length>0){
+  const viewableItemChanged = ({ viewableItems }) => {
+    if (viewableItems.length > 0) {
       setActiveItem(viewableItems[0].item.$id)
       // console.log(viewableItems[0]);
     }
@@ -65,9 +77,9 @@ const Trending = ({ posts }) => {
       )}
       onViewableItemsChanged={viewableItemChanged}
       viewabilityConfig={{ //configure how items are determined to be "viewable"
-        itemVisiblePercentThreshold : 70 // item is considered visible if at least 70% of it is within the viewport
+        itemVisiblePercentThreshold: 70 // item is considered visible if at least 70% of it is within the viewport
       }}
-      contentOffset={{x:150}} //initial scroll position
+      contentOffset={{ x: 150 }} //initial scroll position
       horizontal
     />
   )
