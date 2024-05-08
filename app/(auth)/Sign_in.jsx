@@ -4,7 +4,7 @@ import { Link, Redirect, router } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { images } from '../../constants/index'
 import {FormField,CustomButton} from '../../components'
-import { signin } from '../../lib/appwrite'
+import { getCurrentUser, signin } from '../../lib/appwrite'
 import { useGlobalContext } from '../../context/GlobalProvider'
 
 const SignIn = () => {
@@ -18,11 +18,11 @@ const SignIn = () => {
     }
     setIsSubmitting(true);
     try {
-      const result = await signin(form.email, form.password);
+      await signin(form.email, form.password);
+      const result = await getCurrentUser();
       setUser(result);
       setIsLoggedIn(true);
-      Alert.alert("Success", "User Signed in Sucessfully")
-
+      // Alert.alert("Success", "User Signed in Sucessfully")
       router.replace('/home');
     } catch (error) {
       Alert.alert("Error", error.message)

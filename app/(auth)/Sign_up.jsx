@@ -4,7 +4,7 @@ import { Link, Redirect, router } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { images } from '../../constants/index'
 import {FormField,CustomButton } from '../../components'
-import { createUser } from '../../lib/appwrite'
+import { createUser, getCurrentUser } from '../../lib/appwrite'
 import { useGlobalContext } from '../../context/GlobalProvider'
 
 const SignUp = () => {
@@ -19,7 +19,8 @@ const SignUp = () => {
     }
     setIsSubmitting(true);
     try {
-      const result = await createUser(form.username, form.email, form.password);
+      await createUser(form.username, form.email, form.password);
+      const result = await getCurrentUser();
       setUser(result);
       setIsLoggedIn(true);
       Alert.alert("Success", "Account Created")

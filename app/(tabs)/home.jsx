@@ -1,12 +1,14 @@
 import { View, Text, FlatList, Image, RefreshControl, Alert } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { images } from '../../constants/index'
 import { getAllPosts, getLatestPosts } from '../../lib/appwrite'
 import useAppWrite from '../../lib/useappwrite'
-import {EmptyState, SearchInput, Trending, VideoCard} from '../../components'
+import { EmptyState, SearchInput, Trending, VideoCard } from '../../components'
+import { useGlobalContext } from '../../context/GlobalProvider'
 
 const Home = () => {
+  const {user} = useGlobalContext()
 
   const { data: posts, refetch } = useAppWrite(getAllPosts);
   const { data: trendingPosts } = useAppWrite(getLatestPosts);
@@ -17,6 +19,7 @@ const Home = () => {
     await refetch()
     setRefreshing(false)
   }
+  // console.log(user.documents[0].username);
 
   return (
     <SafeAreaView className="bg-primary h-full">
@@ -34,7 +37,7 @@ const Home = () => {
                   Welcome Back
                 </Text>
                 <Text className="text-2xl font-psemibold text-white">
-                  Diablo
+                  {user.documents[0].username}
                 </Text>
               </View>
 

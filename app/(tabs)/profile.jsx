@@ -1,18 +1,23 @@
 import { View, Text, FlatList, TouchableOpacity, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import {EmptyState, InfoBox, VideoCard} from '../../components'
-import { getUsersPosts } from '../../lib/appwrite'
+import { getUsersPosts, signOut } from '../../lib/appwrite'
 import useAppWrite from '../../lib/useappwrite'
 import { useGlobalContext } from '../../context/GlobalProvider'
 import { icons } from '../../constants'
+import { router } from 'expo-router'
 
 const Profile = () => {
   const { user, setUser, setIsLoggedIn } = useGlobalContext();
   const { data: posts, refetch } = useAppWrite(() => getUsersPosts(user.documents[0].$id));
-  // console.log(user.documents[0].$id,posts)
-  const logout = () => {
-
+  // console.log(user.documents)
+  const logout = async () => {
+    await signOut();
+    router.replace('/sign_in');
+    setUser(null);
+    setIsLoggedIn(false);
   }
+  // console.log(user)
 
   return (
     <SafeAreaView className="bg-primary h-full">
@@ -36,15 +41,15 @@ const Profile = () => {
             </TouchableOpacity>
             <View className="w-16 h-16 border border-secondary rounded-lg justify-center items-center">
               <Image
-                source={{ uri: user?.documents[0]?.avatar }}
+                source={{ uri: user.documents[0].avatar}}
                 className="w-[90%] h-[90%] rounded-lg"
                 resizeMode="cover"
               />
             </View>
             <InfoBox
-              title={user?.documents[0]?.username}
-              containerStyle="mt-5"
-              titleStyle="text-lg"
+              title={user.documents[0].username}
+              containerStyles="mt-5"
+              titleStyles="text-lg"
             />
             <View className="mt-5 flex flex-row">
               <InfoBox
