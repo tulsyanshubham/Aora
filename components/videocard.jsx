@@ -59,7 +59,7 @@ const VideoCard = ({ video: { title, thumbnail, video, creator: { username, avat
                     <Image
                         source={{ uri: thumbnail }}
                         className="w-full h-full rounded-xl mt-3"
-                        resizeMethod='cover'
+                        resizeMode='cover'
                     />
                     <Image
                         source={icons.play}

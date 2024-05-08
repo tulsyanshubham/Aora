@@ -8,7 +8,7 @@ import { EmptyState, SearchInput, Trending, VideoCard } from '../../components'
 import { useGlobalContext } from '../../context/GlobalProvider'
 
 const Home = () => {
-  const {user} = useGlobalContext()
+  const {user} = useGlobalContext();
 
   const { data: posts, refetch } = useAppWrite(getAllPosts);
   const { data: trendingPosts } = useAppWrite(getLatestPosts);
