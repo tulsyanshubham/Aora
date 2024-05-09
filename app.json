@@ -16,8 +16,7 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
-      "package": "com.shubham.aora"
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
@@ -31,6 +30,14 @@
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "81cd15ca-e131-4b28-bcef-c4abededed3f"
+      }
+    }
   }
 }
