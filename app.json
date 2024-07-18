@@ -21,7 +21,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
-        "backgroundColor": "#161622"
+        "backgroundColor": "#ffffff00"
       },
       "package": "com.shubham.aora"
     },
