@@ -3,12 +3,13 @@ import React, { useState } from 'react'
 import { icons } from '../constants'
 import { ResizeMode, Video } from 'expo-av'
 
-const VideoCard = ({ video: { title, thumbnail, video, creator: { username, avatar } } }) => {
+const VideoCard = ({ video: { title, thumbnail, video, creator: { username, avatar }, tag } }) => {
 
     const [play, setPlay] = useState(false)
+    const tagarr = JSON.parse(tag);
 
     return (
-        <View className="flex flex-col items-center px-4 mb-14">
+        <View className="flex flex-col items-center px-4 mb-10">
 
             <View className="flex flex-row gap-3 items-start">
                 <View className="flex justify-center items-center flex-row flex-1">
@@ -67,6 +68,16 @@ const VideoCard = ({ video: { title, thumbnail, video, creator: { username, avat
                         resizeMode="contain"
                     />
                 </TouchableOpacity>
+            )}
+            {tag && (
+                <View className="flex items-start flex-row flex-wrap w-[90vw] mt-3">
+                    {tagarr.map((tag_ele, index) => (
+                        <Text className="mx-[3px] text-gray-500 " key={index} >
+                            {tag_ele.toLowerCase()}
+                        </Text>
+                    ))
+                        }
+                </View>
             )}
         </View>
     )
